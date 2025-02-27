@@ -44,11 +44,9 @@ export function LoginForm({
                 />
               </div>
               <div className="grid gap-2">
-                <div className="flex items-center">
-                  <Label htmlFor="password">
-                    Password
-                  </Label>
-                </div>
+                <Label htmlFor="password">
+                  Password
+                </Label>
                 <Input id="password" type="password" required />
               </div>
               <Button type="submit" className="w-full">
