@@ -22,6 +22,11 @@ export function NavMenu({
                 Login
               </NavigationMenuLink>
             </Link>
+            <Link href="/register" legacyBehavior passHref>
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                Register
+              </NavigationMenuLink>
+            </Link>
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
