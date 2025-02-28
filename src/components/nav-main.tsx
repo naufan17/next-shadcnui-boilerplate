@@ -10,16 +10,16 @@ import {
   SidebarMenuSubButton,
 } from "@/components/ui/sidebar"
 
-export function NavMain({
-  items,
-}: {
+interface NavMainProps {
   items: {
     title: string
     url: string
     icon?: LucideIcon
     isActive?: boolean
   }[]
-}) {
+}
+
+export function NavMain({ items }: NavMainProps) {
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Platform</SidebarGroupLabel>

@@ -1,10 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 
 import * as React from "react"
-import {
-  GalleryVerticalEnd,
-  House,
-} from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
 import { NavUser } from "@/components/nav-user"
@@ -17,31 +14,30 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 
-// This is sample data.
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-  menu: {
-    name: "Next Shadcn UI Boilerplate",
-    logo: GalleryVerticalEnd,
-    version: "1.0.0",
-  },
-  navMain: [
-    {
-      title: "Dashboard",
-      url: "#",
-      icon: House,
-      isActive: true,
-    },
-  ],
+interface SidebarProps {
+  data: {
+    user: {
+      name: string
+      email: string
+      avatar: string
+    }
+    menu: {
+      name: string
+      logo: any
+      version: string
+    }
+    navMain: {
+      title: string
+      url: string
+      icon: any
+      isActive: boolean
+    }[]
+  }
 }
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({ data }: SidebarProps) {
   return (
-    <Sidebar collapsible="icon" {...props}>
+    <Sidebar>
       <SidebarHeader>
         <MenuHeader menu={data.menu} />
       </SidebarHeader>

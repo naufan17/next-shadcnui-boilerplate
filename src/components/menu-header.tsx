@@ -8,16 +8,15 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 
-export function MenuHeader({
-  menu,
-}: {
+interface MenuHeaderProps {
   menu: {
     name: string
     logo: React.ElementType
     version: string
   }
-}) {
+}
 
+export function MenuHeader({ menu }: MenuHeaderProps) {
   return (
     <SidebarMenu>
       <SidebarMenuItem>

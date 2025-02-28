@@ -10,17 +10,12 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import Link from "next/link"
-// import { useActionState } from "react"
 
-export function LoginForm({
-  className,
-  ...props
-}: React.ComponentPropsWithoutRef<"div">) {
-  // const [state, action, pending] = useActionState(login, undefined)
+export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRef<"div">) {
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <Card>
+      <Card className="shadow-none">
         <CardHeader>
           <CardTitle className="text-2xl">
             Login

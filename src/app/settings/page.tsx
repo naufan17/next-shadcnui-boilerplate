@@ -31,7 +31,7 @@ const [selectedItem, setSelectedItem] = React.useState(menu.items[0].name);
       </div>
       <Separator className="my-4"/>
       <div className="flex flex-col md:flex-row w-full p-2">
-        <aside className="flex flex-row md:flex-col w-1/5 mr-4 mb-4 gap-2">
+        <aside className="flex flex-row md:flex-col w-1/5 mr-4 mb-4 gap-1">
           {menu.items.map((item, index) => (
             <div
               key={`${item.name}-${index}`}

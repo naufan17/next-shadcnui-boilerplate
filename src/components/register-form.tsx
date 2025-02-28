@@ -11,13 +11,10 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import Link from "next/link"
 
-export function RegisterForm({
-  className,
-  ...props
-}: React.ComponentPropsWithoutRef<"div">) {
+export function RegisterForm({ className, ...props }: React.ComponentPropsWithoutRef<"div">) {
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <Card>
+      <Card className="shadow-none">
         <CardHeader>
           <CardTitle className="text-2xl">
             Register

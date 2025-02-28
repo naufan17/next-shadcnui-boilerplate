@@ -1,46 +1,128 @@
-import { AppSidebar } from "@/components/app-sidebar"
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-} from "@/components/ui/breadcrumb"
-import { Separator } from "@/components/ui/separator"
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-} from "@/components/ui/sidebar"
+import { CardOverview } from "@/components/card-overview";
+import { CardRecentSales } from "@/components/card-recent-sales";
+import { ChartOverview } from "@/components/chart-overview";
+import AdminLayout from "@/components/layout/admin-layout";
+import { CircleDollarSign, CirclePercent, FolderKanbanIcon, Users } from "lucide-react";
 
+const data = {
+  statistic: [
+    {
+      title: "Total Revenue",
+      value: "$45,231.89",
+      description: "+20.4% from last month",
+      icon: CircleDollarSign
+    },
+    {
+      title: "Sales",
+      value: "$23,456",
+      description: "+5.4% from last month",
+      icon: CirclePercent
+    },
+    {
+      title: "Customers",
+      value: "1,345",
+      description: "+3.4% from last month",
+      icon: Users
+    },
+    {
+      title: "Products",
+      value: "56",
+      description: "+1.4% from last month",
+      icon: FolderKanbanIcon
+    },
+  ],
+  chartData: [
+    { 
+      month: "January", 
+      desktop: 186,
+      mobile: 80 
+    },
+    { 
+      month: "February", 
+      desktop: 305, 
+      mobile: 200 
+    },
+    { 
+      month: "March", 
+      desktop: 237, 
+      mobile: 120 
+    },
+    { 
+      month: "April", 
+      desktop: 73, 
+      mobile: 190 
+    },
+    { 
+      month: "May", 
+      desktop: 209, 
+      mobile: 130 
+    },
+    { 
+      month: "June", 
+      desktop: 214, 
+      mobile: 140 
+    },
+  ],
+  sales: [
+    {
+      name: "John Doe",
+      email: "john@example.com",
+      avatar: "/avatars/shadcn.jpg",
+      value: "$399.00",
+    },
+    {
+      name: "Marry Doe",
+      email: "marry@example.com",
+      avatar: "/avatars/shadcn.jpg",
+      value: "$199.00",
+    },
+    {
+      name: "Larry Doe",
+      email: "larry@example.com",
+      avatar: "/avatars/shadcn.jpg",
+      value: "$99.00",
+    },
+    {
+      name: "Sally Doe",
+      email: "sally@example.com",
+      avatar: "/avatars/shadcn.jpg",
+      value: "$250.00",
+    },
+    {
+      name: "Ricky Doe", 
+      email: "ricky@example.com", 
+      avatar: "/avatars/shadcn.jpg", 
+      value: "$129.00"
+    }
+  ]
+}
 export default function Page() {
   return (
-    <SidebarProvider>
-      <AppSidebar />
-      <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
-          <div className="flex items-center gap-2 px-4">
-            <SidebarTrigger className="-ml-1" />
-            <Separator orientation="vertical" className="mr-2 h-4" />
-            <Breadcrumb>
-              <BreadcrumbList>
-                <BreadcrumbItem className="hidden md:block">
-                  <BreadcrumbLink href="/dashboard">
-                    Dashboard
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb>
-          </div>
-        </header>
-        <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-          <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-            <div className="aspect-video rounded-xl bg-muted/50" />
-            <div className="aspect-video rounded-xl bg-muted/50" />
-            <div className="aspect-video rounded-xl bg-muted/50" />
-          </div>
-          <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" />
+    <AdminLayout>
+      <div className="flex flex-col gap-4 p-4 pt-0">
+        <div className="grid auto-rows-min gap-4 grid-cols-2 lg:grid-cols-4">
+          {data.statistic.map((item, index: number) => (
+            <CardOverview 
+              key={index}
+              index={index}
+              title={item.title}
+              value={item.value}
+              description={item.description}
+              icon={item.icon}
+            />
+          ))}
         </div>
-      </SidebarInset>
-    </SidebarProvider>
+      </div>
+      <div>
+        <div className="flex flex-col lg:flex-row p-4 pt-0 space-x-4">
+          <div className="w-full lg:w-3/5">
+            <ChartOverview data={data.chartData} />
+          </div>
+          <div className="w-full lg:w-2/5">
+            <CardRecentSales data={data.sales} />
+          </div>
+        </div>
+      </div>
+    </AdminLayout>
   )
 }
