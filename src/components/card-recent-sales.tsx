@@ -14,7 +14,7 @@ interface CardRecentSalesProps {
 
 export function CardRecentSales({ data }: CardRecentSalesProps) {
   return (
-    <Card>
+    <Card className="shadow-none">
       <CardHeader>
         <CardTitle className="text-md font-bold flex justify-between items-center">
           Recent Sales
