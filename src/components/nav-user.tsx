@@ -44,11 +44,8 @@ export function NavUser({ user }: NavUserProps) {
       <SidebarMenuItem>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <SidebarMenuButton
-              size="lg"
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
-            >
-              <Avatar className="h-8 w-8 rounded-full">
+            <SidebarMenuButton size="lg" className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground">
+              <Avatar className="h-9 w-9 rounded-full">
                 <AvatarImage src={user.avatar} alt={user.name} />
                 <AvatarFallback className="rounded-full">CN</AvatarFallback>
               </Avatar>
@@ -67,7 +64,7 @@ export function NavUser({ user }: NavUserProps) {
           >
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                <Avatar className="h-8 w-8 rounded-full">
+                <Avatar className="h-9 w-9 rounded-full">
                   <AvatarImage src={user.avatar} alt={user.name} />
                   <AvatarFallback className="rounded-full">CN</AvatarFallback>
                 </Avatar>
@@ -78,7 +75,6 @@ export function NavUser({ user }: NavUserProps) {
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <Link href="/settings">
                 <DropdownMenuItem>
@@ -87,7 +83,6 @@ export function NavUser({ user }: NavUserProps) {
                 </DropdownMenuItem>
               </Link>
             </DropdownMenuGroup>
-            <DropdownMenuSeparator />
             <Link href="/">
               <DropdownMenuItem>
                 <LogOut />

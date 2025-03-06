@@ -5,7 +5,7 @@
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { NextFontWithVariable } from "next/dist/compiled/@next/font";
 import { Provider } from "react-redux";
-import { store } from "@/store/store";
+import { store } from "@/lib/store/store";
 import "./globals.css";
 
 // const geistSans = Geist({

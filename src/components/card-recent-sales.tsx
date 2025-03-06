@@ -1,6 +1,4 @@
-// import { Table } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-// import { TableBody, TableCell, TableRow } from "./ui/table";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 interface CardRecentSalesProps {

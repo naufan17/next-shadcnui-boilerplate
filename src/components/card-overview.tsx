@@ -13,7 +13,7 @@ export function CardOverview({ index, title, value, description, icon }: CardOve
   return (
     <Card key={index} className="shadow-none">
       <CardHeader>
-        <CardTitle className="text-sm font-bold flex justify-between items-center">
+        <CardTitle className="text-sm font-bold flex tracking-normal justify-between items-center">
           {title}
           {React.createElement(icon)}
         </CardTitle>

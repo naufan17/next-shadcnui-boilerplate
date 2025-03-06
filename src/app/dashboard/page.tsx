@@ -93,6 +93,12 @@ const data = {
       email: "ricky@example.com", 
       avatar: "/avatars/shadcn.jpg", 
       value: "$129.00"
+    },
+    {
+      name: "Jenny Doe", 
+      email: "jenny@example.com", 
+      avatar: "/avatars/shadcn.jpg", 
+      value: "$99.00"
     }
   ]
 }
