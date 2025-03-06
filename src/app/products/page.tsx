@@ -73,11 +73,15 @@ export default function Page() {
     <AdminLayout>
       <div className="flex flex-col p-4 pt-0 w-full">
         <div className="flex flex-row justify-between">
-          <Input type="search" placeholder="Find product..." className="w-1/3" />
+          <Input 
+            type="search" 
+            placeholder="Find product..." 
+            className="w-1/3 shadow-none" 
+          />
           <div className="space-x-2">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline">
+                <Button variant="outline" className="shadow-none">
                   Filter
                   <ChevronDown className="ml-2 h-4 w-4" />
                 </Button>
@@ -103,24 +107,40 @@ export default function Page() {
                   <div className="flex flex-col gap-6">
                     <div className="grid gap-2">
                       <Label htmlFor="name">Name</Label>
-                      <Input id="name" type="text"/>
+                      <Input 
+                        id="name" 
+                        type="text"
+                        className="shadow-none"
+                      />
                     </div>
                     <div className="grid gap-2">
                       <Label htmlFor="description">Description</Label>
-                      <Input id="description" type="text"/>
+                      <Input 
+                        id="description" 
+                        type="text"
+                        className="shadow-none"
+                      />
                     </div>
                     <div className="grid gap-2">
                       <Label htmlFor="category">Category</Label>
-                      <Input id="category" type="text"/>
+                      <Input 
+                        id="category" 
+                        type="text"
+                        className="shadow-none"
+                      />
                     </div>
                     <div className="grid gap-2">
                       <Label htmlFor="price">Price</Label>
-                      <Input id="price" type="text"/>
+                      <Input 
+                        id="price" 
+                        type="text"
+                        className="shadow-none"
+                      />
                     </div>
                   </div>
                 </form>
                 <DialogFooter>
-                  <Button type="submit">Save changes</Button>
+                  <Button type="submit" className="shadow-none">Save changes</Button>
                 </DialogFooter>
               </DialogContent>
             </Dialog>

@@ -13,13 +13,23 @@ export default function UpdateProfileForm() {
         <div className="flex flex-col gap-6">
           <div className="grid gap-2">
             <Label htmlFor="name">Name</Label>
-            <Input type="text" id="name" name="name" />
+            <Input 
+              type="text" 
+              id="name" 
+              name="name" 
+              className="shadow-none"
+            />
           </div>
           <div className="grid gap-2">
             <Label htmlFor="email">Email</Label>
-            <Input type="email" id="email" name="email" />
+            <Input 
+              type="email" 
+              id="email" 
+              name="email" 
+              className="shadow-none"
+            />
           </div>
-          <Button type="submit" className="w-36">
+          <Button type="submit" className="w-36 shadow-none">
             Update Profile
           </Button>
         </div>

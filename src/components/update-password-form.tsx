@@ -13,13 +13,23 @@ export default function UpdatePasswordForm() {
         <div className="flex flex-col gap-6">
           <div className="grid gap-2">
             <Label htmlFor="password">Password</Label>
-            <Input type="password" id="password" name="password" />
+            <Input 
+              type="password" 
+              id="password" 
+              name="password" 
+              className="shadow-none"
+            />
           </div>
           <div className="grid gap-2">
             <Label htmlFor="confirmPassword">Confirm Password</Label>
-            <Input type="password" id="confirmPassword" name="confirmPassword" />
+            <Input 
+              type="password" 
+              id="confirmPassword" 
+              name="confirmPassword" 
+              className="shadow-none"
+            />
           </div>
-          <Button type="submit" className="w-36">
+          <Button type="submit" className="w-36 shadow-none">
             Update Password
           </Button>
         </div>

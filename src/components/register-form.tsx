@@ -35,6 +35,7 @@ export function RegisterForm({
                     id="name"
                     type="text"
                     placeholder="John Doe"
+                    className="shadow-none"
                     required
                   />
                 </div>
@@ -44,6 +45,7 @@ export function RegisterForm({
                     id="email"
                     type="email"
                     placeholder="m@example.com"
+                    className="shadow-none"
                     required
                   />
                 </div>
@@ -54,15 +56,25 @@ export function RegisterForm({
                       Forgot your password?
                     </a> */}
                   </div>
-                  <Input id="password" type="password" required />
+                  <Input 
+                    id="password" 
+                    type="password" 
+                    className="shadow-none"
+                    required
+                  />
                 </div>
                 <div className="grid gap-2">
                   <div className="flex items-center">
                     <Label htmlFor="confirmPassword">Confirm Password</Label>
                   </div>
-                  <Input id="confirmPassword" type="password" required />
+                  <Input 
+                    id="confirmPassword" 
+                    type="password" 
+                    className="shadow-none"
+                    required 
+                  />
                 </div>
-                <Button type="submit" className="w-full">
+                <Button type="submit" className="w-full shadow-none">
                   Register
                 </Button>
               </div>

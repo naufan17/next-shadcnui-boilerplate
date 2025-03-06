@@ -51,6 +51,7 @@ export function LoginForm({
                     id="email"
                     type="email"
                     placeholder="m@example.com"
+                    className="shadow-none"
                     required
                   />
                 </div>
@@ -61,9 +62,15 @@ export function LoginForm({
                       Forgot your password?
                     </a> */}
                   </div>
-                  <Input id="password" type="password" required />
+                  <Input 
+                    id="password" 
+                    type="password" 
+                    placeholder="password"
+                    className="shadow-none"
+                    required 
+                  />
                 </div>
-                <Button type="submit" className="w-full">
+                <Button type="submit" className="w-full shadow-none">
                   Login
                 </Button>
               </div>

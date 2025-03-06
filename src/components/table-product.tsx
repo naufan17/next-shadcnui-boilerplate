@@ -57,24 +57,44 @@ export function TableProduct({ products }: TableProductProps) {
                       <div className="flex flex-col gap-6">
                         <div className="grid gap-2">
                           <Label htmlFor="name">Name</Label>
-                          <Input id="name" type="text" defaultValue={product.name} />
+                          <Input 
+                            id="name" 
+                            type="text" 
+                            className="shadow-none" 
+                            defaultValue={product.name} 
+                          />
                         </div>
                         <div className="grid gap-2">
                           <Label htmlFor="description">Description</Label>
-                          <Input id="description" type="text" defaultValue={product.description} />
+                          <Input 
+                            id="description" 
+                            type="text" 
+                            className="shadow-none" 
+                            defaultValue={product.description} 
+                          />
                         </div>
                         <div className="grid gap-2">
                           <Label htmlFor="category">Category</Label>
-                          <Input id="category" type="text" defaultValue={product.category} />
+                          <Input 
+                            id="category" 
+                            type="text" 
+                            className="shadow-none" 
+                            defaultValue={product.category} 
+                          />
                         </div>
                         <div className="grid gap-2">
                           <Label htmlFor="price">Price</Label>
-                          <Input id="price" type="text" defaultValue={product.price} />
+                          <Input 
+                            id="price" 
+                            type="text" 
+                            className="shadow-none" 
+                            defaultValue={product.price} 
+                          />
                         </div>
                       </div>
                     </form>
                     <DialogFooter>
-                      <Button type="submit">Save changes</Button>
+                      <Button type="submit" className="shadow-none">Save changes</Button>
                     </DialogFooter>
                   </DialogContent>
                 </Dialog>
@@ -92,8 +112,8 @@ export function TableProduct({ products }: TableProductProps) {
                       </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
-                      <AlertDialogCancel>Cancel</AlertDialogCancel>
-                      <AlertDialogAction>Continue</AlertDialogAction>
+                      <AlertDialogCancel className="shadow-none">Cancel</AlertDialogCancel>
+                      <AlertDialogAction className="shadow-none">Continue</AlertDialogAction>
                     </AlertDialogFooter>
                   </AlertDialogContent>
                 </AlertDialog>
