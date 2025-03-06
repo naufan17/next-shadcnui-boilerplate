@@ -1,12 +1,6 @@
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
@@ -51,7 +45,7 @@ export function LoginForm({
                     id="email"
                     type="email"
                     placeholder="m@example.com"
-                    className="shadow-none"
+                    className="shadow-none text-sm"
                     required
                   />
                 </div>
@@ -66,7 +60,7 @@ export function LoginForm({
                     id="password" 
                     type="password" 
                     placeholder="password"
-                    className="shadow-none"
+                    className="shadow-none py-0.5 px-1.5 md:py-1 md:px-3"
                     required 
                   />
                 </div>

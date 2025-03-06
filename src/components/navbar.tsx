@@ -1,15 +1,11 @@
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuList,
-} from "@/components/ui/navigation-menu";
-import Link from "next/link";
+import { NavigationMenu, NavigationMenuItem, NavigationMenuList } from "@/components/ui/navigation-menu";
 import { GalleryVerticalEnd } from "lucide-react";
+import Link from "next/link";
 
 export function Navbar() {
   return (
     <nav className="relative top-0 z-50 mb-8 md:mb-12">
-      <div className="flex flex-wrap justify-between items-center mx-auto py-2 px-4 md:py-4 md:px-8 sm:max-w-xl md:max-w-full lg:max-w-screen-xl">
+      <div className="hidden sm:flex flex-wrap justify-between items-center mx-auto py-2 px-4 md:py-4 md:px-8 sm:max-w-xl md:max-w-full lg:max-w-screen-xl">
         <Link href="/" className="flex items-center gap-2 self-center font-medium">
           <div className="flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
             <GalleryVerticalEnd className="size-4" />

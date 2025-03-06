@@ -1,14 +1,7 @@
 "use client"
 
 import { type LucideIcon } from "lucide-react"
-
-import {
-  SidebarGroup,
-  SidebarGroupLabel,
-  SidebarMenu,
-  SidebarMenuItem,
-  SidebarMenuSubButton,
-} from "@/components/ui/sidebar"
+import { SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuItem, SidebarMenuSubButton } from "@/components/ui/sidebar"
 
 interface NavMainProps {
   items: {

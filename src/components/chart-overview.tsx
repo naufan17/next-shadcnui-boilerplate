@@ -1,9 +1,9 @@
 'use client'
 
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 import * as React from "react"
-import { ChartConfig, ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent } from "./ui/chart";
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
+import { ChartConfig, ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const chartConfig = {
   desktop: {

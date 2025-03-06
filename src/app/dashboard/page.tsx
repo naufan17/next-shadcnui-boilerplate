@@ -120,7 +120,7 @@ export default function Page() {
         </div>
       </div>
       <div>
-        <div className="flex flex-col lg:flex-row p-4 pt-0 space-x-4">
+        <div className="flex flex-col lg:flex-row p-4 pt-0 gap-4">
           <div className="w-full lg:w-3/5">
             <ChartOverview data={data.chartData} />
           </div>

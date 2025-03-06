@@ -69,7 +69,7 @@ export default function AdminLayout({ children }: Readonly<{ children: React.Rea
             <Separator orientation="vertical" className="mr-2 h-4" />
             <Breadcrumb>
               <BreadcrumbList>
-                <BreadcrumbItem className="hidden md:block">
+                <BreadcrumbItem className="block">
                   <BreadcrumbLink href={activeBreadcrumb?.url || "/dashboard"}>
                     {activeBreadcrumb?.title || "Dashboard"}
                   </BreadcrumbLink>

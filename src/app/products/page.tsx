@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuTrigger, DropdownMenuCheckboxItem } from "@/components/ui/dropdown-menu";
 import { TableProduct } from "@/components/table-product";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const products = {
   data: [
@@ -76,7 +77,7 @@ export default function Page() {
           <Input 
             type="search" 
             placeholder="Find product..." 
-            className="w-1/3 shadow-none" 
+            className="w-1/3 shadow-none placeholder:text-sm" 
           />
           <div className="space-x-2">
             <DropdownMenu>
@@ -110,7 +111,7 @@ export default function Page() {
                       <Input 
                         id="name" 
                         type="text"
-                        className="shadow-none"
+                        className="shadow-none text-sm"
                       />
                     </div>
                     <div className="grid gap-2">
@@ -118,23 +119,29 @@ export default function Page() {
                       <Input 
                         id="description" 
                         type="text"
-                        className="shadow-none"
+                        className="shadow-none text-sm"
                       />
                     </div>
                     <div className="grid gap-2">
                       <Label htmlFor="category">Category</Label>
-                      <Input 
-                        id="category" 
-                        type="text"
-                        className="shadow-none"
-                      />
+                      <Select>
+                        <SelectTrigger id="category" className="shadow-none text-sm">
+                          <SelectValue placeholder="Select a category" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Tablet">Tablet</SelectItem>
+                          <SelectItem value="Laptop">Laptop</SelectItem>
+                          <SelectItem value="Smartphone">Smartphone</SelectItem>
+                          <SelectItem value="Personal Computer">Personal Computer</SelectItem>
+                        </SelectContent>
+                      </Select>
                     </div>
                     <div className="grid gap-2">
                       <Label htmlFor="price">Price</Label>
                       <Input 
                         id="price" 
                         type="text"
-                        className="shadow-none"
+                        className="shadow-none text-sm"
                       />
                     </div>
                   </div>

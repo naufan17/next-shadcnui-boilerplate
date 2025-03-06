@@ -1,11 +1,12 @@
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger, AlertDialogContent } from "@/components/ui/alert-dialog";
 import { Dialog, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, DialogContent } from "@/components/ui/dialog";
-import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 import { Delete, Edit } from "lucide-react";
-import { Button } from "./ui/button";
-import { Label } from "./ui/label";
-import { Input } from "./ui/input";
 
 interface TableProductProps {
   products: {
@@ -60,7 +61,7 @@ export function TableProduct({ products }: TableProductProps) {
                           <Input 
                             id="name" 
                             type="text" 
-                            className="shadow-none" 
+                            className="shadow-none text-sm" 
                             defaultValue={product.name} 
                           />
                         </div>
@@ -69,25 +70,30 @@ export function TableProduct({ products }: TableProductProps) {
                           <Input 
                             id="description" 
                             type="text" 
-                            className="shadow-none" 
+                            className="shadow-none text-sm" 
                             defaultValue={product.description} 
                           />
                         </div>
                         <div className="grid gap-2">
                           <Label htmlFor="category">Category</Label>
-                          <Input 
-                            id="category" 
-                            type="text" 
-                            className="shadow-none" 
-                            defaultValue={product.category} 
-                          />
+                          <Select>
+                            <SelectTrigger id="category" className="shadow-none text-sm">
+                              <SelectValue placeholder={product.category} />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="Tablet">Tablet</SelectItem>
+                              <SelectItem value="Laptop">Laptop</SelectItem>
+                              <SelectItem value="Smartphone">Smartphone</SelectItem>
+                              <SelectItem value="Personal Computer">Personal Computer</SelectItem>
+                            </SelectContent>
+                          </Select>
                         </div>
                         <div className="grid gap-2">
                           <Label htmlFor="price">Price</Label>
                           <Input 
                             id="price" 
                             type="text" 
-                            className="shadow-none" 
+                            className="shadow-none text-sm" 
                             defaultValue={product.price} 
                           />
                         </div>
