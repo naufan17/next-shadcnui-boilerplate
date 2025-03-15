@@ -10,7 +10,7 @@ export function Footer() {
           <div className="flex size-8 items-center justify-center rounded-lg bg-secondary text-secondary-foreground">
             <GalleryVerticalEnd className="size-4" />
           </div>
-          Next Shadcn UI Boilerplate
+          Next Shadcn UI
         </Link>
         <div className="flex items-center gap-4 self-center font-medium">
           <p className="text-sm md:text-base">Copyright © 2025</p>

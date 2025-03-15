@@ -10,7 +10,7 @@ export function Navbar() {
           <div className="flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
             <GalleryVerticalEnd className="size-4" />
           </div>
-          Next Shadcn UI Boilerplate
+          Next Shadcn UI
         </Link>
         <NavigationMenu>
         <NavigationMenuList>

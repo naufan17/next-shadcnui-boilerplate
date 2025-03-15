@@ -5,12 +5,12 @@ import { Button } from "@/components/ui/button";
 
 export default function UpdatePasswordForm() {
   return (
-    <div className="flex flex-col w-full gap-2">
+    <div className="flex flex-col gap-2">
       <h1 className="text-lg md:text-xl font-bold">Password</h1>
       <h5 className="text-md">Change your password</h5>
       <Separator className="my-4" />
       <form action="">
-        <div className="flex flex-col gap-6">
+        <div className="space-y-6">
           <div className="grid gap-2">
             <Label htmlFor="password">Password</Label>
             <Input 
@@ -29,7 +29,7 @@ export default function UpdatePasswordForm() {
               className="shadow-none"
             />
           </div>
-          <Button type="submit" className="w-36 shadow-none">
+          <Button type="submit" className="shadow-none">
             Update Password
           </Button>
         </div>

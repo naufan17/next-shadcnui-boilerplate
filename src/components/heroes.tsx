@@ -11,10 +11,10 @@ export function Heroes() {
             Version 1.0.0
           </Badge>
           <h1 className="text-3xl md:text-5xl font-bold mt-4 md:mt-6">
-            Next Shadcn Boilerplate
+            Next Shadcn UI Boilerplate
           </h1>
           <p className="text-md md:text-lg mt-4 md:mt-6">
-            Get started to develop your next Shadcn UI project with Next.js.
+            Get started to develop your next Shadcn UI project with Next.js
           </p>
           <button className="bg-primary text-primary-foreground shadow hover:bg-primary/90 text-white py-2 md:py-2.5 px-5 md:px-6 mt-6 md:mt-8 rounded-full">
             <Link href="https://github.com/naufan17/next-shadcn-boilerplate" className="inline-flex items-center font-medium text-[13px] md:text-[15px]">

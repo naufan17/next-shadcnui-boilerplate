@@ -11,10 +11,10 @@ export function Jumbotron() {
           <Badge className="text-[10px] md:text-[12px] py-0.5 px-1.5 md:py-1 md:px-3 rounded-full">
             Version 1.0.0
           </Badge>
-          <CardTitle className="text-3xl md:text-5xl font-bold mt-4 md:mt-6">
+          <CardTitle className="text-3xl md:text-5xl font-bold mt-4 md:mt-6 text-center">
             Next Shadcn UI Boilerplate
           </CardTitle>
-          <CardDescription className="text-md md:text-lg mt-4 md:mt-6">
+          <CardDescription className="text-md md:text-lg mt-4 md:mt-6 text-center">
             Get started to develop your next Shadcn UI project with Next.js.
           </CardDescription>
           <button className="bg-primary text-primary-foreground shadow hover:bg-primary/90 text-white py-2.5 px-6 mt-6 md:mt-8 rounded-full">
