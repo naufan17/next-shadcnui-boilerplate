@@ -1,4 +1,4 @@
-import AdminLayout from "@/components/layout/admin-layout";
+import AdminLayout from "@/components/layout/admin";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, DialogContent } from "@/components/ui/dialog";
 import { ChevronDown } from "lucide-react";

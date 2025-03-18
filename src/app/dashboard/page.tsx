@@ -1,7 +1,7 @@
 import { CardOverview } from "@/components/card-overview";
 import { CardRecentSales } from "@/components/card-recent-sales";
 import { ChartOverview } from "@/components/chart-overview";
-import AdminLayout from "@/components/layout/admin-layout";
+import AdminLayout from "@/components/layout/admin";
 import { CircleDollarSign, CirclePercent, FolderKanbanIcon, Users } from "lucide-react";
 
 const data = {

@@ -90,7 +90,7 @@ export function Product() {
       <div className="flex items-start md:items-center justify-start md:justify-center mt-4 md:mt-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 w-full">
           {products.data.map((product, index) => (
-            <Card key={index} className="shadow-none">
+            <Card key={index} className="bg-secondary text-secondary-foreground shadow-none border-none">
               <CardHeader className="p-4 md:p-6">
                 <Image
                   src={product.image}
@@ -111,7 +111,7 @@ export function Product() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="pb-4 px-4 md:pb-6 md:px-6">
-                <Badge variant="secondary" className="text-xs md:text-sm">
+                <Badge className="text-xs md:text-sm">
                   {product.category}
                 </Badge>
               </CardContent>

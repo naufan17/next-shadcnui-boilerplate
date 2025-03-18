@@ -3,7 +3,7 @@
 import * as React from "react";
 import UpdatePasswordForm from "@/components/update-password-form";
 import UpdateProfileForm from "@/components/update-profile-form";
-import AdminLayout from "@/components/layout/admin-layout";
+import AdminLayout from "@/components/layout/admin";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TabsContent } from "@radix-ui/react-tabs";
 
