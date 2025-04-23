@@ -3,7 +3,7 @@ import { Card,  CardDescription, CardHeader, CardTitle } from "@/components/ui/c
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 
-export function Jumbotron() {
+export function Banner() {
   return (
     <div className="flex flex-wrap items-center justify-center mx-auto py-8 px-4 md:py-12 md:px-8 sm:max-w-xl md:max-w-full lg:max-w-screen-xl">
       <Card className="bg-secondary text-secondary-foreground shadow-none border-none w-full">

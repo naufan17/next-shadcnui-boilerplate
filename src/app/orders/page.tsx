@@ -1,3 +1,5 @@
+"use client";
+
 import AdminLayout from "@/components/layout/admin";
 
 export default function Page() {

@@ -1,3 +1,5 @@
+"use client";
+
 import { CardOverview } from "@/components/card-overview";
 import { CardRecentSales } from "@/components/card-recent-sales";
 import { ChartOverview } from "@/components/chart-overview";
