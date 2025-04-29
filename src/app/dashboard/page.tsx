@@ -4,6 +4,7 @@ import { CardOverview } from "@/components/card-overview";
 import { CardRecentSales } from "@/components/card-recent-sales";
 import { ChartOverview } from "@/components/chart-overview";
 import AdminLayout from "@/components/layout/admin";
+import AuthGuard from "@/components/guard/auth";
 import { CircleDollarSign, CirclePercent, FolderKanbanIcon, Users } from "lucide-react";
 
 const data = {
@@ -106,31 +107,33 @@ const data = {
 }
 export default function Page() {
   return (
-    <AdminLayout>
-      <div className="flex flex-col gap-4 p-4 pt-0">
-        <div className="grid auto-rows-min gap-4 grid-cols-2 lg:grid-cols-4">
-          {data.statistic.map((item, index: number) => (
-            <CardOverview 
-              key={index}
-              index={index}
-              title={item.title}
-              value={item.value}
-              description={item.description}
-              icon={item.icon}
-            />
-          ))}
-        </div>
-      </div>
-      <div>
-        <div className="flex flex-col lg:flex-row p-4 pt-0 gap-4">
-          <div className="w-full lg:w-3/5">
-            <ChartOverview data={data.chartData} />
-          </div>
-          <div className="w-full lg:w-2/5">
-            <CardRecentSales data={data.sales} />
+    <AuthGuard>
+      <AdminLayout>
+        <div className="flex flex-col gap-4 p-4 pt-0">
+          <div className="grid auto-rows-min gap-4 grid-cols-2 lg:grid-cols-4">
+            {data.statistic.map((item, index: number) => (
+              <CardOverview 
+                key={index}
+                index={index}
+                title={item.title}
+                value={item.value}
+                description={item.description}
+                icon={item.icon}
+              />
+            ))}
           </div>
         </div>
-      </div>
-    </AdminLayout>
+        <div>
+          <div className="flex flex-col lg:flex-row p-4 pt-0 gap-4">
+            <div className="w-full lg:w-3/5">
+              <ChartOverview data={data.chartData} />
+            </div>
+            <div className="w-full lg:w-2/5">
+              <CardRecentSales data={data.sales} />
+            </div>
+          </div>
+        </div>
+      </AdminLayout>
+    </AuthGuard>  
   )
 }

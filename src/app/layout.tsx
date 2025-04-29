@@ -4,8 +4,7 @@ import type { Metadata } from "next";
 // import { Geist, Geist_Mono } from "next/font/google";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { NextFontWithVariable } from "next/dist/compiled/@next/font";
-// import { Provider } from "react-redux";
-// import { store } from "@/lib/store/store";
+import { Providers } from "./provider";
 import "./globals.css";
 
 // const geistSans = Geist({
@@ -38,9 +37,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={jakartaSans.variable}>
-        {/* <Provider store={store}> */}
+        <Providers>
           {children}
-        {/* </Provider> */}
+        </Providers>
       </body>
     </html>
   );

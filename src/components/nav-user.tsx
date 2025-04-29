@@ -1,10 +1,14 @@
 "use client"
 
+import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { ChevronsUpDown, LogOut, Settings } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@/components/ui/sidebar"
-import Link from "next/link"
+import { useDispatch } from "react-redux"
+import { AppDispatch } from "@/lib/store/store"
+import { setLogout } from "@/lib/store/slices/auth"
 
 interface NavUserProps {
   user: {
@@ -15,7 +19,15 @@ interface NavUserProps {
 }
 
 export function NavUser({ user }: NavUserProps) {
+  const dispatch = useDispatch<AppDispatch>()
+  const router = useRouter()
   const { isMobile } = useSidebar()
+
+  const handleLogout = () => {
+    dispatch(setLogout())
+    localStorage.removeItem("accessToken")
+    router.push('/login')
+  }
 
   return (
     <SidebarMenu>
@@ -61,12 +73,12 @@ export function NavUser({ user }: NavUserProps) {
                 </DropdownMenuItem>
               </Link>
             </DropdownMenuGroup>
-            <Link href="/">
+            <div onClick={handleLogout}>
               <DropdownMenuItem>
                 <LogOut />
                 Log out
               </DropdownMenuItem>
-            </Link>
+            </div>
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>

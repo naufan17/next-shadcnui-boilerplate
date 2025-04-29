@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import { AxiosRequestConfig } from "axios";
-import axiosInstance from "@/lib/api";
+import axiosInstance from "@/lib/axios";
 
 type FetchState<T> = {
   data?: T | null;
@@ -23,7 +23,7 @@ export function useFetch<T>(
       setLoading(true);
       try {
         const response = await axiosInstance({
-          method,
+          method,  
           url,
           ...options
         });
