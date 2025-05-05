@@ -55,7 +55,7 @@ const data = {
 }
 
 export default function AdminLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  const [isLoading, setIsLoading] = useState(true)
+  const [loading, setLoading] = useState(true)
   const currentPath = usePathname()
 
   const updatedNavMain = data.navMain.map(item => ({
@@ -73,7 +73,7 @@ export default function AdminLayout({ children }: Readonly<{ children: React.Rea
     } catch (error: any) {
       console.error("Fetch profile failed: ", error.response)
     } finally {
-      setIsLoading(false)
+      setLoading(false)
     }
   }
 
@@ -81,7 +81,7 @@ export default function AdminLayout({ children }: Readonly<{ children: React.Rea
     getProfile()
   }, [])
 
-  if (isLoading) {
+  if (loading) {
     return <Loading />
   }
 

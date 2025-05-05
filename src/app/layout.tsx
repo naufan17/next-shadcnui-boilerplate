@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 // import { Geist, Geist_Mono } from "next/font/google";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { NextFontWithVariable } from "next/dist/compiled/@next/font";
+import { Toaster } from "@/components/ui/toaster";
 import { Providers } from "./provider";
 import "./globals.css";
 
@@ -38,7 +39,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={jakartaSans.variable}>
         <Providers>
-          {children}
+          <main>          
+            {children}
+          </main>
+          <Toaster />
         </Providers>
       </body>
     </html>

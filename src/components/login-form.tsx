@@ -26,6 +26,22 @@ export function LoginForm({
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState<boolean>(false)
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    setError(null)
+
+    switch (name) {
+      case "email":
+        setEmail(value)
+        break
+      case "password":
+        setPassword(value)
+        break
+      default:
+        break
+    }
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
@@ -42,22 +58,6 @@ export function LoginForm({
       console.error("Login failed: ", error.response)
     } finally {
       setLoading(false)
-    }
-  }
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    setError(null)
-
-    switch (name) {
-      case "email":
-        setEmail(value)
-        break
-      case "password":
-        setPassword(value)
-        break
-      default:
-        break
     }
   }
 
