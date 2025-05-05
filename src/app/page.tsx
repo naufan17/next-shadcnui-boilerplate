@@ -1,6 +1,6 @@
 import { Navbar } from "@/components/navbar";
 import { Heroes } from "@/components/heroes";
-import { Features } from "@/components/features";
+import { Statistic } from "@/components/statistic";
 import { FrequentlyAskedQuestions } from "@/components/frequently-asked-questions";
 import { Banner } from "@/components/banner";
 import { Testimonials } from "@/components/testimonials";
@@ -11,7 +11,7 @@ export default function Home() {
     <div className="min-h-screen w-full bg-white">
       <Navbar />
       <Heroes />
-      <Features />
+      <Statistic />
       <FrequentlyAskedQuestions />
       <Banner />
       <Testimonials />

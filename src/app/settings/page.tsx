@@ -1,16 +1,16 @@
 "use client"
 
-import * as React from "react";
 import AdminLayout from "@/components/layout/admin";
-import AuthGuard from "@/components/guard/auth";
+import PrivateGuard from "@/components/guard/private";
 import UpdatePasswordForm from "@/components/update-password-form";
 import UpdateProfileForm from "@/components/update-profile-form";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TabsContent } from "@radix-ui/react-tabs";
 
 export default function Settings() {
+
   return (
-    <AuthGuard>
+    <PrivateGuard>
       <AdminLayout>
         <div className="flex flex-col p-4 pt-0">
           <div className="flex flex-col w-full p-2 md:p-4 gap-1">
@@ -29,7 +29,7 @@ export default function Settings() {
                 <TabsTrigger value="password" className="font-semibold">Password</TabsTrigger>
               </TabsList>
               <TabsContent value="profile">
-                <UpdateProfileForm />
+                <UpdateProfileForm/>
               </TabsContent>
               <TabsContent value="password">
                 <UpdatePasswordForm />
@@ -55,6 +55,6 @@ export default function Settings() {
           </div>
         </div>
       </AdminLayout>
-    </AuthGuard>
+    </PrivateGuard>
   );
 }

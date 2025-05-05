@@ -1,7 +1,7 @@
 "use client";
 
 import AdminLayout from "@/components/layout/admin";
-import AuthGuard from "@/components/guard/auth";
+import PrivateGuard from "@/components/guard/private";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, DialogContent } from "@/components/ui/dialog";
 import { ChevronDown } from "lucide-react";
@@ -74,7 +74,7 @@ const products = {
 
 export default function Page() {
   return (
-    <AuthGuard>
+    <PrivateGuard>
       <AdminLayout>
         <div className="flex flex-col p-4 pt-0 w-full">
           <div className="flex flex-row justify-between">
@@ -160,6 +160,6 @@ export default function Page() {
           <TableProduct products={products} /> 
         </div>
       </AdminLayout>
-    </AuthGuard>
+    </PrivateGuard>
   )
 }

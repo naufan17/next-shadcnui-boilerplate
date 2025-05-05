@@ -27,13 +27,13 @@ axiosInstance.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    if (error.response.status === 401 && !originalRequest._retry) {
+    if (error.response.message === 'jwt expired' && !originalRequest._retry) {
       originalRequest._retry = true;
 
       try {
-        const response = await axiosInstance.post('/auth/refresh', { withCredentials: true});
+        const response = await axiosInstance.get('/auth/refresh', { withCredentials: true });
 
-        const { accessToken } = response.data;
+        const { accessToken } = response.data.data.accessToken;
         localStorage.setItem('accessToken', accessToken);
         originalRequest.headers.Authorization = `Bearer ${accessToken}`;
 

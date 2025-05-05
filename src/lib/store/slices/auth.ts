@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface AuthState {
@@ -25,21 +24,6 @@ const authSlice = createSlice({
     },
   },
 });
-
-// export const login = createAsyncThunk(
-//   "auth/login",
-//   async (credentials: { email: string; password: string }, { rejectWithValue }) => {
-//     try {
-//       const response: AxiosResponse = await axiosInstance.post('/login', credentials);
-//       const accessToken: string = response.data.data.accessToken;
-
-//       localStorage.setItem('accessToken', accessToken);
-//       return accessToken;
-//     } catch (error: any) {
-//       return rejectWithValue(error.response.data.message);
-//     }
-//   }
-// )
 
 export const { setLogin, setLogout } = authSlice.actions;
 export default authSlice.reducer;

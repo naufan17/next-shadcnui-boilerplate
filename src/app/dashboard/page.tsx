@@ -4,7 +4,7 @@ import { CardOverview } from "@/components/card-overview";
 import { CardRecentSales } from "@/components/card-recent-sales";
 import { ChartOverview } from "@/components/chart-overview";
 import AdminLayout from "@/components/layout/admin";
-import AuthGuard from "@/components/guard/auth";
+import PrivateGuard from "@/components/guard/private";
 import { CircleDollarSign, CirclePercent, FolderKanbanIcon, Users } from "lucide-react";
 
 const data = {
@@ -107,7 +107,7 @@ const data = {
 }
 export default function Page() {
   return (
-    <AuthGuard>
+    <PrivateGuard>
       <AdminLayout>
         <div className="flex flex-col gap-4 p-4 pt-0">
           <div className="grid auto-rows-min gap-4 grid-cols-2 lg:grid-cols-4">
@@ -134,6 +134,6 @@ export default function Page() {
           </div>
         </div>
       </AdminLayout>
-    </AuthGuard>  
+    </PrivateGuard>  
   )
 }

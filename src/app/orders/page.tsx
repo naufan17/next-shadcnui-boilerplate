@@ -1,11 +1,11 @@
 "use client";
 
 import AdminLayout from "@/components/layout/admin";
-import AuthGuard from "@/components/guard/auth";
+import PrivateGuard from "@/components/guard/private";
 
 export default function Page() {
   return (
-    <AuthGuard>
+    <PrivateGuard>
       <AdminLayout>
         <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
           <div className="grid auto-rows-min gap-4 md:grid-cols-3">
@@ -16,6 +16,6 @@ export default function Page() {
           <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" />
         </div>
       </AdminLayout>
-    </AuthGuard>
+    </PrivateGuard>
   )
 }

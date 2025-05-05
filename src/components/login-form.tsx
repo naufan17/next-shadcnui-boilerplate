@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client"
+
 import { useState } from "react"
 import { AxiosResponse } from "axios"
 import Link from "next/link"
@@ -34,11 +37,27 @@ export function LoginForm({
       dispatch(setLogin(accessToken))
       localStorage.setItem("accessToken", accessToken)
       setError(null)
+    } catch (error: any) {
+      setError(error.response?.data.message || "Login failed")
+      console.error("Login failed: ", error.response)
+    } finally {
       setLoading(false)
-    } catch (error) {
-      setError("Invalid email or password")
-      setLoading(false)
-      console.error("Login failed: ", error)
+    }
+  }
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    setError(null)
+
+    switch (name) {
+      case "email":
+        setEmail(value)
+        break
+      case "password":
+        setPassword(value)
+        break
+      default:
+        break
     }
   }
 
@@ -84,10 +103,11 @@ export function LoginForm({
                   <Input
                     id="email"
                     type="email"
+                    name="email"
                     placeholder="m@example.com"
-                    className="shadow-none text-sm"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={handleInputChange}
+                    className="shadow-none text-sm"
                     required
                   />
                 </div>
@@ -101,10 +121,11 @@ export function LoginForm({
                   <Input 
                     id="password" 
                     type="password" 
+                    name="password"
                     placeholder="password"
-                    className="shadow-none py-0.5 px-1.5 md:py-1 md:px-3"
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={handleInputChange}
+                    className="shadow-none py-0.5 px-1.5 md:py-1 md:px-3"
                     required 
                   />
                 </div>

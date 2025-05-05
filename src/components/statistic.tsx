@@ -1,6 +1,4 @@
-import * as React from "react"
-
-export function Features() {
+export function Statistic() {
   return (
     <div className="bg-secondary my-8 md:my-12">
       <div className="flex flex-wrap items-center justify-center mx-auto py-8 px-4 md:py-12 md:px-8 sm:max-w-xl md:max-w-full lg:max-w-screen-xl">

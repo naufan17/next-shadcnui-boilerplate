@@ -1,6 +1,5 @@
 'use client'
 
-import * as React from "react"
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 import { ChartConfig, ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";

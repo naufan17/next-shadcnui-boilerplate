@@ -1,6 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
+import { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
+import { type AxiosResponse } from 'axios'
+import axiosInstance from '@/lib/axios'
 import { AppSidebar } from "@/components/app-sidebar"
 import {
   Breadcrumb,
@@ -15,6 +19,7 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar"
 import { GalleryVerticalEnd, House, Package, ReceiptText } from "lucide-react"
+import { Loading } from '@/components/ui/loading'
 
 const data = {
   user: {
@@ -50,6 +55,7 @@ const data = {
 }
 
 export default function AdminLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const [isLoading, setIsLoading] = useState(true)
   const currentPath = usePathname()
 
   const updatedNavMain = data.navMain.map(item => ({
@@ -58,6 +64,26 @@ export default function AdminLayout({ children }: Readonly<{ children: React.Rea
   }))
 
   const activeBreadcrumb = updatedNavMain.find(item => item.isActive)
+
+  const getProfile = async () => {
+    try {
+      const response: AxiosResponse = await axiosInstance.get('/account/profile')
+      data.user.name = response.data.data.name
+      data.user.email = response.data.data.email
+    } catch (error: any) {
+      console.error("Fetch profile failed: ", error.response)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    getProfile()
+  }, [])
+
+  if (isLoading) {
+    return <Loading />
+  }
 
   return (
     <SidebarProvider>
