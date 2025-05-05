@@ -71,7 +71,7 @@ export default function AdminLayout({ children }: Readonly<{ children: React.Rea
       data.user.name = response.data.data.name
       data.user.email = response.data.data.email
     } catch (error: any) {
-      console.error("Fetch profile failed: ", error.response)
+      console.error("Fetch profile failed: ", error.response?.data.message)
     } finally {
       setLoading(false)
     }
@@ -81,9 +81,7 @@ export default function AdminLayout({ children }: Readonly<{ children: React.Rea
     getProfile()
   }, [])
 
-  if (loading) {
-    return <Loading />
-  }
+  if (loading) return <Loading />
 
   return (
     <SidebarProvider>

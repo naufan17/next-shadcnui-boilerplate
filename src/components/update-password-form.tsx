@@ -40,13 +40,10 @@ export default function UpdatePasswordForm() {
 
     try {
       await axiosInstance.post('/account/update-password', { password, confirmPassword })
-      toast({
-        title: "Success",
-        description: "Password updated successfully",
-      })
+      toast({ title: "Success", description: "Password updated successfully" })
     } catch (error: any) {
       setError(error.response?.data.message || "Update password failed")
-      console.error("Update password failed: ", error.response)
+      console.error("Update password failed: ", error.response?.data.message)
     } finally {
       setLoading(false)
     }
@@ -60,7 +57,7 @@ export default function UpdatePasswordForm() {
       {error && 
         <Alert variant="destructive" className="mb-4">
           <AlertCircle className="h-4 w-4 -mt-1" />
-          <AlertTitle className="mb-0">{error}</AlertTitle>
+          <AlertTitle className="mb-0 tracking-normal">{error}</AlertTitle>
         </Alert>
       }
       <form onSubmit={handleSubmit}>

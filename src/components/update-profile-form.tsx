@@ -54,13 +54,10 @@ export default function UpdateProfileForm() {
     try {
       await axiosInstance.post('/account/update-profile', { name, email });
       getProfile();
-      toast({
-        title: "Success",
-        description: "Profile updated successfully",
-      })
+      toast({ title: "Success", description: "Profile updated successfully" })
     } catch (error: any) {
       setError(error.response?.data.message || "Update profile failed");
-      console.error("Update profile failed: ", error.response);
+      console.error("Update profile failed: ", error.response?.data.message);
     } finally {
       setLoading(false);
     }
@@ -82,7 +79,7 @@ export default function UpdateProfileForm() {
       {error && 
         <Alert variant="destructive" className="mb-4">
           <AlertCircle className="h-4 w-4 -mt-1" />
-          <AlertTitle className="mb-0">{error}</AlertTitle>
+          <AlertTitle className="mb-0 tracking-normal">{error}</AlertTitle>
         </Alert>}
       <form onSubmit={handleSubmit}>
         <div className="space-y-6">

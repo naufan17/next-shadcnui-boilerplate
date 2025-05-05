@@ -42,20 +42,19 @@ export function LoginForm({
     }
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setLoading(true)
 
     try {
       const response: AxiosResponse = await axiosInstance.post('/auth/login', { email, password });
       const accessToken: string = response.data.data.accessToken
-      
+            
       dispatch(setLogin(accessToken))
       localStorage.setItem("accessToken", accessToken)
-      setError(null)
     } catch (error: any) {
       setError(error.response?.data.message || "Login failed")
-      console.error("Login failed: ", error.response)
+      console.error("Login failed: ", error.response?.data.message)
     } finally {
       setLoading(false)
     }
@@ -94,7 +93,7 @@ export function LoginForm({
             {error && 
               <Alert variant="destructive">
                 <AlertCircle className="h-4 w-4 -mt-1" />
-                <AlertTitle className="mb-0">{error}</AlertTitle>
+                <AlertTitle className="mb-0 tracking-normal">{error}</AlertTitle>
               </Alert>
             }
               <div className="grid gap-6">

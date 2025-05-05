@@ -1,11 +1,13 @@
 import Axios, { AxiosInstance } from 'axios';
+import { store } from '@/lib/store/store';
+import { setLogout } from '@/lib/store/slices/auth';
 
 const axiosInstance: AxiosInstance = Axios.create({
   baseURL: "http://localhost:8000/api/v1",
   headers: {
     'Content-Type': 'application/json',
   },
-  
+
   timeout: 10000,
   withCredentials: true,
 });
@@ -42,8 +44,20 @@ axiosInstance.interceptors.response.use(
       } catch (err) {
         return Promise.reject(err);
       }
-    }
-
+    } else if (
+      error.response?.data.statusCode === 500 || 
+      error.response?.data.statusCode === 404 ||
+      error.response?.data.message === 'Access token is invalid' ||
+      error.response?.data.message === 'Refresh token is invalid' ||
+      error.response?.data.message === 'No auth token' ||
+      error.response?.data.message === 'jwt malformed' ||
+      error.response?.data.message === 'invalid signature'
+    ) {
+      store.dispatch(setLogout());
+      localStorage.removeItem('accessToken');
+      window.location.href = '/login';
+    } 
+    
     return Promise.reject(error);
   }
 )
