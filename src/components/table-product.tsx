@@ -12,14 +12,12 @@ import { Delete, Edit } from "lucide-react";
 
 interface TableProductProps {
   products: {
-    data: {
-      id: number;
-      name: string;
-      description: string;
-      category: string;
-      price: string;
-    }[]
-  }
+    id: number;
+    name: string;
+    description: string;
+    category: string;
+    price: number;
+  }[];
 }
 
 export function TableProduct({ products }: TableProductProps) {
@@ -37,7 +35,7 @@ export function TableProduct({ products }: TableProductProps) {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {products.data.map((product) => (
+        {products.map((product) => (
           <TableRow key={product.id} className="py-2">
             <TableCell className="font-medium">{product.id}</TableCell>
             <TableCell>{product.name}</TableCell>

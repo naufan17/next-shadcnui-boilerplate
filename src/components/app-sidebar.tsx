@@ -8,11 +8,6 @@ import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } fr
 
 interface SidebarProps {
   data: {
-    user: {
-      name: string
-      email: string
-      avatar: string
-    }
     menu: {
       name: string
       logo: any
@@ -37,7 +32,7 @@ export function AppSidebar({ data }: SidebarProps) {
         <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser/>
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

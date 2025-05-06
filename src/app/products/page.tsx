@@ -1,5 +1,7 @@
 "use client";
 
+import { useState, useEffect } from "react";
+import axiosInstance from "@/lib/axios";
 import AdminLayout from "@/components/layout/admin";
 import PrivateGuard from "@/components/guard/private";
 import { Button } from "@/components/ui/button";
@@ -11,68 +13,37 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuTrigg
 import { TableProduct } from "@/components/table-product";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-const products = {
-  data: [
-    {
-      id: 1000001,
-      name: "Asus ROG",
-      description: "15.6 inch, RAM 32GB, SSD 1TB",
-      category: "Laptop",
-      price: 'Rp. 20.000.00',
-    },
-    {
-      id: 1000002,
-      name: "Asus Zenbook",
-      description: "14 inch, RAM 132GB, SSD 1TB",
-      category: "Laptop",
-      price: 'Rp. 18.000.00',
-    },
-    {
-      id: 1000003,
-      name: "Asus VivoBook",
-      description: "14 inch, RAM 16GB, SSD 1TB",
-      category: "Laptop",
-      price: 'Rp. 15.000.00',
-    },
-    {
-      id: 1000004,
-      name: "Lenovo IdeaPad",
-      description: "14 inch, RAM 16GB, SSD 1TB",
-      category: "Laptop",
-      price: 'Rp. 13.000.00',
-    },
-    {
-      id: 1000005,
-      name: "Lenovo Yoga",
-      description: "14.5 inch, RAM 32GB, SSD 1TB",
-      category: "Laptop",
-      price: 'Rp. 24.000.00',
-    },
-    {
-      id: 1000006,
-      name: "Lenovo Legion",
-      description: "15.6 inch, RAM 32GB, SSD 1TB",
-      category: "Laptop",
-      price: 'Rp. 25.000.00',
-    },
-    {
-      id: 1000007,
-      name: "Acer Aspire",
-      description: "14 inch, RAM 16GB, SSD 512GB",
-      category: "Laptop",
-      price: 'Rp. 10.000.00',
-    },
-    {
-      id: 1000008,
-      name: "Acer Predator",
-      description: "15.6 inch, RAM 32GB, SSD 1TB",
-      category: "Laptop",
-      price: 'Rp. 20.000.00',
-    },
-  ],
-}
-
 export default function Page() {
+  const [loading, setLoading] = useState<boolean>(true);
+  const [products, setProducts] = useState<{ 
+    id: number; 
+    name: string; 
+    description: string; 
+    category: string; 
+    price: number 
+  }[]>([]);
+
+  const fetchProducts = async () => {
+    try {
+      const response = await axiosInstance.get('/products');
+      setProducts(response.data.data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSearch = (laptopName: string) => {
+    if (!laptopName) return fetchProducts();
+
+    setProducts(products.filter(product => product.name.toLowerCase().includes(laptopName.toLowerCase())));
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
   return (
     <PrivateGuard>
       <AdminLayout>
@@ -81,6 +52,7 @@ export default function Page() {
             <Input 
               type="search" 
               placeholder="Find product..." 
+              onChange={(e) => handleSearch(e.target.value)}
               className="w-1/3 shadow-none placeholder:text-sm" 
             />
             <div className="space-x-2">
@@ -157,7 +129,12 @@ export default function Page() {
               </Dialog>
             </div>
           </div>
-          <TableProduct products={products} /> 
+          {loading ? (
+            <div className="flex h-96 bg-secondary rounded-md w-full mt-4 animate-pulse"></div>
+          ) : (
+            <TableProduct products={products}/> 
+          )
+        }
         </div>
       </AdminLayout>
     </PrivateGuard>
