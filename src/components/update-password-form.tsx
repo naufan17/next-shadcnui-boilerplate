@@ -6,17 +6,17 @@ import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/hooks/use-toast";
 import axiosInstance from "@/lib/axios";
 import { Alert, AlertTitle } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
+import { AxiosResponse } from "axios";
+import { toast } from "@/hooks/use-toast";
 
 export default function UpdatePasswordForm() {
   const [loading, setLoading] = useState<boolean>(false)
   const [password, setPassword] = useState<string>("")
   const [confirmPassword, setConfirmPassword] = useState<string>("")
   const [error, setError] = useState<string | null>(null)
-  const { toast } = useToast()
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -39,8 +39,8 @@ export default function UpdatePasswordForm() {
     setLoading(true)
 
     try {
-      await axiosInstance.post('/account/update-password', { password, confirmPassword })
-      toast({ title: "Success", description: "Password updated successfully" })
+      const response: AxiosResponse = await axiosInstance.post('/account/update-password', { password, confirmPassword })
+      toast({ title: "Success", description: response.data.message })
     } catch (error: any) {
       setError(error.response?.data.message || "Update password failed")
       console.error("Update password failed: ", error.response?.data.message)

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { AxiosResponse } from "axios";
 import axiosInstance from "@/lib/axios";
 import AdminLayout from "@/components/layout/admin";
 import PrivateGuard from "@/components/guard/private";
@@ -12,20 +13,45 @@ import { Input } from "@/components/ui/input";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuTrigger, DropdownMenuCheckboxItem } from "@/components/ui/dropdown-menu";
 import { TableProduct } from "@/components/table-product";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { toast } from "@/hooks/use-toast";
 
 export default function Page() {
   const [loading, setLoading] = useState<boolean>(true);
   const [products, setProducts] = useState<{ 
-    id: number; 
+    id: string; 
     name: string; 
     description: string; 
     category: string; 
-    price: number 
+    price: string; 
   }[]>([]);
+  const [categories, setCategories] = useState<{
+    id: string;
+    name: string;
+  }[]>([]);
+  const [product, setProduct] = useState<{
+    name: string;
+    description: string;
+    categoryId: string;
+    price: string;
+  }>({
+    name: "",
+    description: "",
+    categoryId: "",
+    price: "",
+  });
+
+  const fetchCategories = async () => {
+    try {
+      const response: AxiosResponse = await axiosInstance.get('/categories');
+      setCategories(response.data.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const fetchProducts = async () => {
     try {
-      const response = await axiosInstance.get('/products');
+      const response: AxiosResponse = await axiosInstance.get('/products');
       setProducts(response.data.data);
     } catch (error) {
       console.error(error);
@@ -40,8 +66,40 @@ export default function Page() {
     setProducts(products.filter(product => product.name.toLowerCase().includes(laptopName.toLowerCase())));
   };
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    switch (name) {
+      case "name":
+        setProduct({ ...product, name: value });
+        break;
+      case "description":
+        setProduct({ ...product, description: value });
+        break;
+      case "categoryId":
+        setProduct({ ...product, categoryId: value });
+        break;
+      case "price":
+        setProduct({ ...product, price: value });
+        break;
+      default:
+        break;
+    }
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const response: AxiosResponse = await axiosInstance.post('/products', product);
+      setProduct({ name: "", description: "", categoryId: "", price: "" });
+      toast({ title: "Success", description: response.data.message })
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     fetchProducts();
+    fetchCategories();
   }, []);
 
   return (
@@ -76,18 +134,22 @@ export default function Page() {
                   <Button variant="default">Add Product</Button>
                 </DialogTrigger>
                 <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>Add Product</DialogTitle>
-                    <DialogDescription>Create a new product here. Click save when you&apos;re done.</DialogDescription>
-                  </DialogHeader>
-                  <form>
-                    <div className="flex flex-col gap-6">
+                  <form onSubmit={handleSubmit}>
+                    <DialogHeader>
+                      <DialogTitle>Add Product</DialogTitle>
+                      <DialogDescription>Create a new product here. Click save when you&apos;re done.</DialogDescription>
+                    </DialogHeader>
+                    <div className="flex flex-col gap-6 mt-6">
                       <div className="grid gap-2">
                         <Label htmlFor="name">Name</Label>
                         <Input 
                           id="name" 
                           type="text"
+                          placeholder="Product name"
+                          name="name"
+                          onChange={handleInputChange}
                           className="shadow-none text-sm"
+                          required
                         />
                       </div>
                       <div className="grid gap-2">
@@ -95,20 +157,30 @@ export default function Page() {
                         <Input 
                           id="description" 
                           type="text"
+                          placeholder="Product description"
+                          name="description"
+                          onChange={handleInputChange}
                           className="shadow-none text-sm"
+                          required
                         />
                       </div>
                       <div className="grid gap-2">
                         <Label htmlFor="category">Category</Label>
-                        <Select>
-                          <SelectTrigger id="category" className="shadow-none text-sm">
+                        <Select
+                          onValueChange={(value) =>
+                            setProduct({ ...product, categoryId: value })
+                          }
+                          required
+                        >
+                          <SelectTrigger id="categoryId" className="shadow-none text-sm">
                             <SelectValue placeholder="Select a category" />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="Tablet">Tablet</SelectItem>
-                            <SelectItem value="Laptop">Laptop</SelectItem>
-                            <SelectItem value="Smartphone">Smartphone</SelectItem>
-                            <SelectItem value="Personal Computer">Personal Computer</SelectItem>
+                            {categories.map((category) => (
+                              <SelectItem key={category.id} value={category.id.toString()}>
+                                {category.name}
+                              </SelectItem>
+                            ))}
                           </SelectContent>
                         </Select>
                       </div>
@@ -117,14 +189,18 @@ export default function Page() {
                         <Input 
                           id="price" 
                           type="text"
+                          placeholder="Product price"
+                          name="price"
+                          onChange={handleInputChange}
                           className="shadow-none text-sm"
+                          required
                         />
                       </div>
                     </div>
+                    <DialogFooter>
+                      <Button type="submit" className="shadow-none mt-6">Save changes</Button>
+                    </DialogFooter>
                   </form>
-                  <DialogFooter>
-                    <Button type="submit" className="shadow-none">Save changes</Button>
-                  </DialogFooter>
                 </DialogContent>
               </Dialog>
             </div>
@@ -132,10 +208,10 @@ export default function Page() {
           {loading ? (
             <div className="flex h-96 bg-secondary rounded-md w-full mt-4 animate-pulse"></div>
           ) : (
-            <TableProduct products={products}/> 
-          )
-        }
-        </div>
+            <TableProduct data={{ products, categories }} /> 
+            )
+          }
+          </div>
       </AdminLayout>
     </PrivateGuard>
   )

@@ -8,15 +8,14 @@ import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/hooks/use-toast";
 import { Alert, AlertTitle } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
+import { toast } from "@/hooks/use-toast";
 
 export default function UpdateProfileForm() {
   const [loading, setLoading] = useState<boolean>(true);
   const [user, setUser] = useState<{ name: string, email: string }>({ name: "", email: "" });
   const [error, setError] = useState<string | null>(null);
-  const { toast } = useToast();
 
   const getProfile = async () => {
     try {
@@ -50,9 +49,9 @@ export default function UpdateProfileForm() {
     setLoading(true);
 
     try {
-      await axiosInstance.post('/account/update-profile', { name: user.name, email: user.email });
+      const response: AxiosResponse = await axiosInstance.post('/account/update-profile', { name: user.name, email: user.email });
       getProfile();
-      toast({ title: "Success", description: "Profile updated successfully" })
+      toast({ title: "Success", description: response.data.message });
     } catch (error: any) {
       setError(error.response?.data.message || "Update profile failed");
       console.error("Update profile failed: ", error.response?.data.message);

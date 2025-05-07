@@ -9,18 +9,91 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Delete, Edit } from "lucide-react";
+import { AxiosResponse } from "axios";
+import axiosInstance from "@/lib/axios";
+import { toast } from "@/hooks/use-toast";
+import { useState } from "react";
 
 interface TableProductProps {
-  products: {
-    id: number;
-    name: string;
-    description: string;
-    category: string;
-    price: number;
-  }[];
+  data: {
+    products: {
+      id: string;
+      name: string;
+      description: string;
+      category: string;
+      price: string;
+    }[];
+    categories: {
+      id: string;
+      name: string;
+    }[];
+  }
 }
 
-export function TableProduct({ products }: TableProductProps) {
+export function TableProduct({ data }: TableProductProps) {
+  const [product, setProduct] = useState<{
+    id: string;
+    name: string;
+    description: string;
+    categoryId: string;
+    price: string;
+  }>({
+    id: "",
+    name: "",
+    description: "",
+    categoryId: "",
+    price: "",
+  });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+  
+    switch (name) {
+      case "id":
+        setProduct({ ...product, id: value })
+        break
+      case "name":
+        setProduct({ ...product, name: value })
+        break
+      case "description":
+        setProduct({ ...product, description: value })
+        break
+      case "categoryId":
+        setProduct({ ...product, categoryId: value })
+        break
+      case "price":
+        setProduct({ ...product, price: value })
+        break
+      default:
+        break
+    }
+  }
+  
+  const handleSubmit = async () => {
+    try {
+      const response: AxiosResponse = await axiosInstance.put('/products/' + product.id, {
+        name: product.name,
+        description: product.description,
+        price: product.price,
+        categoryId: product.categoryId
+      });
+      toast({ title: "Success", description: response.data.message })      
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const handleDelete = async (id: string) => {
+      try {
+        const response: AxiosResponse = await axiosInstance.delete('/products/' + id);
+        toast({ title: "Success", description: response.data.message })      
+      } catch (error) {
+        console.log(error);
+      } finally {
+        window.location.reload();
+      }
+    }
+
   return (
     <div className="rounded-md border w-full mt-4">
     <Table>
@@ -35,7 +108,7 @@ export function TableProduct({ products }: TableProductProps) {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {products.map((product) => (
+        {data.products.map((product) => (
           <TableRow key={product.id} className="py-2">
             <TableCell className="font-medium">{product.id}</TableCell>
             <TableCell>{product.name}</TableCell>
@@ -50,19 +123,22 @@ export function TableProduct({ products }: TableProductProps) {
                     </Button>
                   </DialogTrigger>
                   <DialogContent>
+                    <form onSubmit={handleSubmit}>
                     <DialogHeader>
-                      <DialogTitle>Edit Product</DialogTitle>
-                      <DialogDescription>Make changes to your product here. Click save when you&apos;re done.</DialogDescription>
-                    </DialogHeader>
-                    <form>
-                      <div className="flex flex-col gap-6">
+                        <DialogTitle>Edit Product</DialogTitle>
+                        <DialogDescription>Make changes to your product here. Click save when you&apos;re done.</DialogDescription>
+                      </DialogHeader>
+                      <div className="flex flex-col gap-6 mt-6">
                         <div className="grid gap-2">
+                          <Input type="hidden" name="id" value={product.id} />
                           <Label htmlFor="name">Name</Label>
                           <Input 
                             id="name" 
-                            type="text" 
-                            className="shadow-none text-sm" 
+                            type="text"
+                            name="name"
                             defaultValue={product.name} 
+                            onChange={handleInputChange}
+                            className="shadow-none text-sm" 
                           />
                         </div>
                         <div className="grid gap-2">
@@ -70,21 +146,28 @@ export function TableProduct({ products }: TableProductProps) {
                           <Input 
                             id="description" 
                             type="text" 
+                            name="description"
+                            defaultValue={product.description}
+                            onChange={handleInputChange}
                             className="shadow-none text-sm" 
-                            defaultValue={product.description} 
                           />
                         </div>
                         <div className="grid gap-2">
                           <Label htmlFor="category">Category</Label>
-                          <Select>
-                            <SelectTrigger id="category" className="shadow-none text-sm">
-                              <SelectValue placeholder={product.category} />
+                          <Select
+                            onValueChange={(value) =>
+                              setProduct({ ...product, categoryId: value })
+                            }
+                          >
+                            <SelectTrigger id="categoryId" className="shadow-none text-sm">
+                              <SelectValue placeholder={product.category}/>
                             </SelectTrigger>
                             <SelectContent>
-                              <SelectItem value="Tablet">Tablet</SelectItem>
-                              <SelectItem value="Laptop">Laptop</SelectItem>
-                              <SelectItem value="Smartphone">Smartphone</SelectItem>
-                              <SelectItem value="Personal Computer">Personal Computer</SelectItem>
+                              {data.categories.map((category) => (
+                                <SelectItem key={category.id} value={category.id.toString()}>
+                                  {category.name}
+                                </SelectItem>
+                              ))}
                             </SelectContent>
                           </Select>
                         </div>
@@ -92,16 +175,18 @@ export function TableProduct({ products }: TableProductProps) {
                           <Label htmlFor="price">Price</Label>
                           <Input 
                             id="price" 
-                            type="text" 
-                            className="shadow-none text-sm" 
+                            type="text"
+                            name="price"
                             defaultValue={product.price} 
+                            onChange={handleInputChange}
+                            className="shadow-none text-sm" 
                           />
                         </div>
                       </div>
+                      <DialogFooter>
+                        <Button type="submit" className="shadow-none mt-6">Save changes</Button>
+                      </DialogFooter>
                     </form>
-                    <DialogFooter>
-                      <Button type="submit" className="shadow-none">Save changes</Button>
-                    </DialogFooter>
                   </DialogContent>
                 </Dialog>
                 <AlertDialog>
@@ -118,8 +203,15 @@ export function TableProduct({ products }: TableProductProps) {
                       </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
-                      <AlertDialogCancel className="shadow-none">Cancel</AlertDialogCancel>
-                      <AlertDialogAction className="shadow-none">Continue</AlertDialogAction>
+                      <AlertDialogCancel className="shadow-none">
+                        Cancel
+                      </AlertDialogCancel>
+                      <AlertDialogAction 
+                        onClick={() => handleDelete(product.id)} 
+                        className="shadow-none"
+                      >
+                        Continue
+                      </AlertDialogAction>
                     </AlertDialogFooter>
                   </AlertDialogContent>
                 </AlertDialog>

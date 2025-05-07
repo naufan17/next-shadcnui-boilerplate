@@ -45,8 +45,8 @@ axiosInstance.interceptors.response.use(
         return Promise.reject(err);
       }
     } else if (
-      error.response?.data.statusCode === 500 || 
-      error.response?.data.statusCode === 404 ||
+      // error.response?.data.message === "Internal server error" || 
+      error.response?.data.message === "User not found" ||
       error.response?.data.message === 'Access token is invalid' ||
       error.response?.data.message === 'Refresh token is invalid' ||
       error.response?.data.message === 'No auth token' ||
