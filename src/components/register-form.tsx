@@ -14,50 +14,50 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useToast } from "@/hooks/use-toast"
 import { AxiosResponse } from "axios"
+import { z } from "zod"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+
+const formSchema = z.object({
+  name: z.string(),
+  email: z.string().email(),
+  password: z.string().min(10, "Password must be at least 10 characters long"),
+  confirmPassword: z.string().min(10, "Password must be at least 10 characters long"),
+})
+
+type FormData = z.infer<typeof formSchema>
 
 export function RegisterForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
-  const [name, setName] = useState<string>("")
-  const [email, setEmail] = useState<string>("")
-  const [password, setPassword] = useState<string>("")
-  const [confirmPassword, setConfirmPassword] = useState<string>("")
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState<boolean>(false)
   const { toast } = useToast()
   const router = useRouter()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: zodResolver(formSchema),
+  })
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    setError(null)
-
-    switch (name) {
-      case "name":
-        setName(value)
-        break
-      case "email":
-        setEmail(value)
-        break
-      case "password":
-        setPassword(value)
-        break
-      case "confirmPassword":
-        setConfirmPassword(value)
-        break
-      default:
-        break
-    }
-  }
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+  const onSubmit = async (data: FormData) => {
     setLoading(true)
 
     try {
-      const response: AxiosResponse = await axiosInstance.post('/auth/register', { name, email, password, confirmPassword })
+      const response: AxiosResponse = await axiosInstance.post('/auth/register', { 
+        name: data.name, 
+        email: data.email, 
+        password: data.password, 
+        confirmPassword: data.confirmPassword 
+      });
 
-      toast({ title: "Success", description: response.data.data.message })
+      toast({ 
+        title: "Success", 
+        description: response.data.data.message 
+      })
       router.push("/login")
     } catch (error: any) {
       setError(error.response?.data.message || "Register failed")
@@ -79,7 +79,7 @@ export function RegisterForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="grid gap-6">
               {error && 
                 <Alert variant="destructive">
@@ -93,24 +93,24 @@ export function RegisterForm({
                   <Input
                     id="name"
                     type="text"
-                    name="name"
                     placeholder="John Doe"
-                    onChange={handleInputChange}
+                    {...register("name")}
                     className="shadow-none text-sm"
                     required
                   />
+                  {errors.name && <span className="text-sm text-red-500">{errors.name.message}</span>}
                 </div>
                 <div className="grid gap-2">
                   <Label htmlFor="email">Email</Label>
                   <Input
                     id="email"
                     type="email"
-                    name="email"
                     placeholder="m@example.com"
-                    onChange={handleInputChange}
+                    {...register("email")}
                     className="shadow-none text-sm"
                     required
                   />
+                  {errors.email && <span className="text-sm text-red-500">{errors.email.message}</span>}
                 </div>
                 <div className="grid gap-2">
                   <div className="flex items-center">
@@ -122,11 +122,11 @@ export function RegisterForm({
                   <Input 
                     id="password" 
                     type="password" 
-                    name="password"
-                    onChange={handleInputChange}
+                    {...register("password")}
                     className="shadow-none text-sm"
                     required
                   />
+                  {errors.password && <span className="text-sm text-red-500">{errors.password.message}</span>}
                 </div>
                 <div className="grid gap-2">
                   <div className="flex items-center">
@@ -135,11 +135,11 @@ export function RegisterForm({
                   <Input 
                     id="confirmPassword" 
                     type="password" 
-                    name="confirmPassword"
-                    onChange={handleInputChange}
+                    {...register("confirmPassword")}
                     className="shadow-none text-sm"
                     required 
                   />
+                  {errors.confirmPassword && <span className="text-sm text-red-500">{errors.confirmPassword.message}</span>}
                 </div>
                 <Button type="submit" className="w-full shadow-none">
                   {loading ? (

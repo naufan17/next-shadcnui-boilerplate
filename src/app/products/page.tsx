@@ -14,6 +14,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuTrigg
 import { TableProduct } from "@/components/table-product";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
+import { DialogClose } from "@radix-ui/react-dialog";
 
 export default function Page() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -87,13 +88,25 @@ export default function Page() {
     }
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
     try {
       const response: AxiosResponse = await axiosInstance.post('/products', product);
-      setProduct({ name: "", description: "", categoryId: "", price: "" });
-      toast({ title: "Success", description: response.data.message })
+      
+      toast({ 
+        title: "Success", 
+        description: response.data.message 
+      })
     } catch (error) {
       console.error(error);
+
+      toast({
+        title: "Error",
+        description: "Failed to create product",
+      })
+    } finally {
+      fetchProducts();
     }
   };
 
@@ -198,7 +211,14 @@ export default function Page() {
                       </div>
                     </div>
                     <DialogFooter>
-                      <Button type="submit" className="shadow-none mt-6">Save changes</Button>
+                      <DialogClose>
+                        <Button 
+                          type="submit" 
+                          className="shadow-none mt-6"
+                        >
+                          Save changes
+                        </Button>
+                      </DialogClose>
                     </DialogFooter>
                   </form>
                 </DialogContent>
@@ -208,7 +228,7 @@ export default function Page() {
           {loading ? (
             <div className="flex h-96 bg-secondary rounded-md w-full mt-4 animate-pulse"></div>
           ) : (
-            <TableProduct data={{ products, categories }} /> 
+            <TableProduct data={{ products, categories, fetchProducts }} /> 
             )
           }
           </div>

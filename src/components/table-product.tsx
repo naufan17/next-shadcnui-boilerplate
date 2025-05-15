@@ -13,6 +13,7 @@ import { AxiosResponse } from "axios";
 import axiosInstance from "@/lib/axios";
 import { toast } from "@/hooks/use-toast";
 import { useState } from "react";
+import { DialogClose } from "@radix-ui/react-dialog";
 
 interface TableProductProps {
   data: {
@@ -27,6 +28,7 @@ interface TableProductProps {
       id: string;
       name: string;
     }[];
+    fetchProducts: () => Promise<void>;
   }
 }
 
@@ -69,7 +71,9 @@ export function TableProduct({ data }: TableProductProps) {
     }
   }
   
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
     try {
       const response: AxiosResponse = await axiosInstance.put('/products/' + product.id, {
         name: product.name,
@@ -77,20 +81,40 @@ export function TableProduct({ data }: TableProductProps) {
         price: product.price,
         categoryId: product.categoryId
       });
-      toast({ title: "Success", description: response.data.message })      
+
+      toast({ 
+        title: "Success", 
+        description: response.data.message 
+      })      
     } catch (error) {
       console.log(error);
+
+      toast({
+        title: "Error",
+        description: "Failed to update product",
+      })
+    } finally {
+      data.fetchProducts();
     }
   }
 
   const handleDelete = async (id: string) => {
       try {
         const response: AxiosResponse = await axiosInstance.delete('/products/' + id);
-        toast({ title: "Success", description: response.data.message })      
+
+        toast({ 
+          title: "Success", 
+          description: response.data.message 
+        })      
       } catch (error) {
         console.log(error);
+
+        toast({
+          title: "Error",
+          description: "Failed to delete product",
+        })
       } finally {
-        window.location.reload();
+        data.fetchProducts();
       }
     }
 
@@ -130,7 +154,11 @@ export function TableProduct({ data }: TableProductProps) {
                       </DialogHeader>
                       <div className="flex flex-col gap-6 mt-6">
                         <div className="grid gap-2">
-                          <Input type="hidden" name="id" value={product.id} />
+                          <Input 
+                            type="hidden" 
+                            name="id" 
+                            value={product.id} 
+                          />
                           <Label htmlFor="name">Name</Label>
                           <Input 
                             id="name" 
@@ -184,7 +212,14 @@ export function TableProduct({ data }: TableProductProps) {
                         </div>
                       </div>
                       <DialogFooter>
-                        <Button type="submit" className="shadow-none mt-6">Save changes</Button>
+                        <DialogClose>
+                          <Button 
+                            type="submit" 
+                            className="shadow-none mt-6"
+                          >
+                            Save changes
+                          </Button>
+                        </DialogClose>
                       </DialogFooter>
                     </form>
                   </DialogContent>

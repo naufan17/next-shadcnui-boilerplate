@@ -3,6 +3,9 @@
 
 import { useState } from "react"
 import { AxiosResponse } from "axios"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
 import axiosInstance from "@/lib/axios"
@@ -16,38 +19,36 @@ import { Alert, AlertTitle } from "./ui/alert"
 import { AlertCircle } from "lucide-react"
 import { setLogin } from "@/lib/store/slices/auth"
 
+const formSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(10, "Password must be at least 10 characters long"),
+})
+
+type FormData = z.infer<typeof formSchema>
+
 export function LoginForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
   const dispatch = useDispatch<AppDispatch>()
-  const [email, setEmail] = useState<string>("")
-  const [password, setPassword] = useState<string>("")
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState<boolean>(false)
+  const { 
+    register, 
+    handleSubmit, 
+    formState: { errors } 
+  } = useForm<FormData>({ 
+    resolver: zodResolver(formSchema) 
+  })
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    setError(null)
-
-    switch (name) {
-      case "email":
-        setEmail(value)
-        break
-      case "password":
-        setPassword(value)
-        break
-      default:
-        break
-    }
-  }
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+  const onSubmit = async (data: FormData) => {
     setLoading(true)
 
     try {
-      const response: AxiosResponse = await axiosInstance.post('/auth/login', { email, password });
+      const response: AxiosResponse = await axiosInstance.post('/auth/login', { 
+        email: data.email, 
+        password: data.password 
+      });
       const accessToken: string = response.data.data.accessToken
             
       dispatch(setLogin(accessToken))
@@ -72,7 +73,7 @@ export function LoginForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="grid gap-6">
               {/* <div className="flex flex-col gap-4">
                 <Button variant="outline" className="w-full">
@@ -102,13 +103,12 @@ export function LoginForm({
                   <Input
                     id="email"
                     type="email"
-                    name="email"
                     placeholder="m@example.com"
-                    value={email}
-                    onChange={handleInputChange}
+                    {...register("email")}
                     className="shadow-none text-sm"
                     required
                   />
+                  {errors.email && <p className="text-sm text-red-500">{errors.email.message}</p>}
                 </div>
                 <div className="grid gap-2">
                   <div className="flex items-center">
@@ -120,13 +120,12 @@ export function LoginForm({
                   <Input 
                     id="password" 
                     type="password" 
-                    name="password"
                     placeholder="password"
-                    value={password}
-                    onChange={handleInputChange}
+                    {...register("password")}
                     className="shadow-none py-0.5 px-1.5 md:py-1 md:px-3"
                     required 
                   />
+                  {errors.password && <p className="text-sm text-red-500">{errors.password.message}</p>}
                 </div>
                 <Button type="submit" className="w-full shadow-none">
                   {loading ? (

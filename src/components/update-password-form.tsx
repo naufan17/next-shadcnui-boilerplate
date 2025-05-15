@@ -11,36 +11,41 @@ import { Alert, AlertTitle } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
 import { AxiosResponse } from "axios";
 import { toast } from "@/hooks/use-toast";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const formSchema = z.object({
+  password: z.string().min(10, "Password must be at least 10 characters long"),
+  confirmPassword: z.string().min(10, "Password must be at least 10 characters long"),
+})
+
+type FormData = z.infer<typeof formSchema>
 
 export default function UpdatePasswordForm() {
   const [loading, setLoading] = useState<boolean>(false)
-  const [password, setPassword] = useState<string>("")
-  const [confirmPassword, setConfirmPassword] = useState<string>("")
   const [error, setError] = useState<string | null>(null)
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: zodResolver(formSchema),
+  })
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    setError(null)
-
-    switch (name) {
-      case "password":
-        setPassword(value)
-        break
-      case "confirmPassword":
-        setConfirmPassword(value)
-        break
-      default:
-        break
-    }
-  }
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+  const onSubmit = async (data: FormData) => {
     setLoading(true)
 
     try {
-      const response: AxiosResponse = await axiosInstance.post('/account/update-password', { password, confirmPassword })
-      toast({ title: "Success", description: response.data.message })
+      const response: AxiosResponse = await axiosInstance.post('/account/update-password', { 
+        password: data.password, 
+        confirmPassword: data.confirmPassword 
+      });
+      
+      toast({ 
+        title: "Success", 
+        description: response.data.message 
+      })
     } catch (error: any) {
       setError(error.response?.data.message || "Update password failed")
       console.error("Update password failed: ", error.response?.data.message)
@@ -60,7 +65,7 @@ export default function UpdatePasswordForm() {
           <AlertTitle className="mb-0 tracking-normal">{error}</AlertTitle>
         </Alert>
       }
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="space-y-6">
           <div className="grid gap-2">
             <Label htmlFor="password">Password</Label>
@@ -70,11 +75,11 @@ export default function UpdatePasswordForm() {
               <Input 
                 id="password" 
                 type="password" 
-                name="password"
-                onChange={handleInputChange}
+                {...register("password")}
                 className="shadow-none"
               />
             )}
+            {errors.password && <p className="text-sm text-destructive">{errors.password.message}</p>}
           </div>
           <div className="grid gap-2">
             <Label htmlFor="confirmPassword">Confirm Password</Label>
@@ -84,11 +89,11 @@ export default function UpdatePasswordForm() {
               <Input 
                 id="confirmPassword" 
                 type="password" 
-                name="confirmPassword" 
-                onChange={handleInputChange}
+                {...register("confirmPassword")}
                 className="shadow-none"
               />
             )}
+            {errors.confirmPassword && <p className="text-sm text-destructive">{errors.confirmPassword.message}</p>}
           </div>
           <Button type="submit" className="shadow-none">
             Update Password

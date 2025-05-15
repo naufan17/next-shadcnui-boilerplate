@@ -11,11 +11,28 @@ import { Button } from "@/components/ui/button";
 import { Alert, AlertTitle } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const formSchema = z.object({
+  name: z.string(),
+  email: z.string().email(),
+});
+
+type FormData = z.infer<typeof formSchema>;
 
 export default function UpdateProfileForm() {
   const [loading, setLoading] = useState<boolean>(true);
   const [user, setUser] = useState<{ name: string, email: string }>({ name: "", email: "" });
   const [error, setError] = useState<string | null>(null);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: zodResolver(formSchema),
+  })
 
   const getProfile = async () => {
     try {
@@ -28,30 +45,21 @@ export default function UpdateProfileForm() {
     }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setError(null);
-
-    switch (name) {
-      case "name":
-        setUser({ ...user, name: value });
-        break;
-      case "email":
-        setUser({ ...user, email: value });
-        break;
-      default:
-        break;
-    }
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit = async (data: FormData) => {
     setLoading(true);
 
     try {
-      const response: AxiosResponse = await axiosInstance.post('/account/update-profile', { name: user.name, email: user.email });
+      const response: AxiosResponse = await axiosInstance.post('/account/update-profile', { 
+        name: data.name, 
+        email: data.email 
+      });
+      
       getProfile();
-      toast({ title: "Success", description: response.data.message });
+      
+      toast({ 
+        title: "Success", 
+        description: response.data.message 
+      });
     } catch (error: any) {
       setError(error.response?.data.message || "Update profile failed");
       console.error("Update profile failed: ", error.response?.data.message);
@@ -78,7 +86,7 @@ export default function UpdateProfileForm() {
           <AlertCircle className="h-4 w-4 -mt-1" />
           <AlertTitle className="mb-0 tracking-normal">{error}</AlertTitle>
         </Alert>}
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="space-y-6">
           <div className="grid gap-2">
             <Label htmlFor="name">Name</Label>
@@ -88,12 +96,12 @@ export default function UpdateProfileForm() {
               <Input 
                 id="name" 
                 type="text" 
-                name="name" 
                 defaultValue={user.name}
-                onChange={handleInputChange}
+                {...register("name")}
                 className="shadow-none"
               />               
             )}
+            {errors.name && <span className="text-sm text-red-500">{errors.name.message}</span>}
           </div>
           <div className="grid gap-2">
             <Label htmlFor="email">Email</Label>
@@ -103,12 +111,12 @@ export default function UpdateProfileForm() {
               <Input 
                 id="email" 
                 type="email" 
-                name="email" 
                 defaultValue={user.email}
-                onChange={handleInputChange}
+                {...register("email")}
                 className="shadow-none"
               />
             )}
+            {errors.email && <span className="text-sm text-red-500">{errors.email.message}</span>}
           </div>
           <Button 
             type="submit" 
